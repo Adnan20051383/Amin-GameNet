@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Release{% endblock %}
+
+{% block content %}
+    <section class="reserve-section">
+        <h2>Release a Reservation</h2>
+        <div class="reservation-form-container">
+            <form method="post" class="reservation-form">
+                {% csrf_token %}
+                <label for="table">Table:</label>
+                <input class="form-input" readonly id="table" name="table" type="text" value="{{ reserve.table.number }}"><br>
+                <label for="reserver">Reserver:</label>
+                <input class="form-input" readonly id="reserver" name="reserver" type="text" value="{{ reserve.reserver }}"><br>
+                <label for="players_num">Number Of Players:</label>
+                <input class="form-input" readonly id="players_num" name="players_num" type="text" value="{{ reserve.players_num }}"><br>
+                <label for="reserve_time">Reserve Time:</label>
+                <input class="form-input" readonly id="reserve_time" name="players_num" type="text" value="{{ reserve.reserve_time }}"><br>
+                <label for="price">To Be Paid $:</label>
+                <input class="form-input" readonly id="price" name="price" type="text" value="{{ price }} $"><br>
+                <div class="action-btns">
+                    <a href="{% url 'add-snack' reserve.id %}" type="submit" class="action-btn">Add Snack</a>
+                    <a href="#" type="submit" class="action-btn">Change Play Mode</a>
+                </div>
+
+                <button type="submit" class="submit-btn">Release</button>
+            </form>
+        </div>
+      </section>
+{% endblock %}

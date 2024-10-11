@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Reserve{% endblock %}
+
+{% block content %}
+    <section class="reserve-section">
+        <h2>Manage Reservations</h2>
+        <div class="tables-container">
+            <div class="table-wrapper not-reserved">
+                <h3>Not Reserved</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Table ID</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for table in not_reserved_tables %}
+                            <tr>
+                                <td>{{ table.number }}</td>
+                                <td><a style="text-decoration: none" href="{% url 'reserve_form' table_number=table.number %}" class="reserve-btn">Reserve</a></td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="3">All tables are reserved!</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-wrapper reserved">
+                <h3>Reserved</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Table ID</th>
+                            <th>Reserved By</th>
+                            <th>Players Num</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for table in reserved_tables %}
+                            <tr>
+                                <td>{{ table.table.number }}</td>
+                                <td>{{ table.reserver }}</td>
+                                <td>{{ table.players_num }}</td>
+                                <td><a style="text-decoration: none" href="{% url 'release_form' table.id %}" class="release-btn">Release</a></td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="4">No tables are currently reserved.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+{% endblock %}

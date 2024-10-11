@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Reserve Histories
+{% endblock %}
+{% block content %}
+<section class="history-section">
+    <h2>Reserve Histories</h2>
+    
+    <table class="history-table">
+        <thead>
+            <tr>
+                <th>Reserver Name</th>
+                <th>Table ID</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Players</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reserve in reserves %}
+            <tr>
+                <td>{{ reserve.reserver }}</td>
+                <td>{{ reserve.table.number }}</td>
+                <td>{{ reserve.reserve_time }}</td>
+                <td>{{ reserve.reserve_end_time }}</td>
+                <td>{{ reserve.players_num }}</td>
+                <td>{{ reserve.show_price }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

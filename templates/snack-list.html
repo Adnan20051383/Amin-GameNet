@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Snack List
+{% endblock %}
+
+{% block content %}
+<section class="snack-section">
+    <h2>Snack List</h2>
+    <div class="snack-list">
+        {% for snack, snack_on_reserve in zipped_lists %}
+        <div class="snack-item">
+            <div class="snack-details">
+                <span class="snack-name">{{ snack.name }}</span>
+                <span class="snack-price">{{ snack.show_price }} $</span>
+            </div>
+            <div class="snack-controls">
+                <form id="snack_delete--{{ snack.id }}" method="post" onsubmit="event.preventDefault(); updateSnackAction('delete', {{ snack.id }}, {{ reserve.id }});">
+                    {% csrf_token %}
+                    <button class="snack-btn decrement" type="submit">-</button>
+                </form>
+                <span class="snack-quantity" id="snack-quantity-{{ snack.id }}">{{ snack_on_reserve }}</span>
+                <form id="snack_add--{{ snack.id }}" method="post" onsubmit="event.preventDefault(); updateSnackAction('add', {{ snack.id }}, {{ reserve.id }});">
+                    {% csrf_token %}
+                    <button class="snack-btn increment" type="submit">+</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div><br><br>
+    <form action="post">
+        {% csrf_token %}
+        <a href="{% url 'release_form' reserve_id=reserve.id %}" style="text-decoration: none" class="submit-btn">Save</a>
+    </form>
+</section>
+
+<script>
+    function updateSnackAction(action, snack_id, reserve_id) {
+        let url = "";
+        if (action === 'add') {
+            url = `/addSnack/${snack_id}/${reserve_id}/`;
+        } else if (action === 'delete') {
+            let quantity = document.getElementById(`snack-quantity-${ snack_id }`).textContent;
+            if (!(quantity == 0)) {
+                url = `/deleteSnack/${snack_id}/${reserve_id}/`;
+            }
+        }
+        const form = document.querySelector(`#snack_${action}--${snack_id}`);
+        form.action = url;
+        form.submit();
+    }
+</script>
+{% endblock %}

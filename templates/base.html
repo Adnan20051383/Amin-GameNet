@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nejat Gamenet - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h1>Nejat GAME</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
+                    <li><a href="{% url 'reserve' %}" class="{% if request.resolver_match.url_name == 'reserve' %}active{% endif %}">Reserve</a></li>
+                    <li><a href="{% url 'history' %}" class="{% if request.resolver_match.url_name == 'history' %}active{% endif %}">History</a></li>
+                    <li><a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'users' %}active{% endif %}">Users</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            {% block content %}
+            <!-- Page-specific content goes here -->
+            {% endblock %}
+        </main>
+    </div>
+</body>
+</html>
